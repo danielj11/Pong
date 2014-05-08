@@ -1,0 +1,50 @@
+# depslib dependency file v1.0
+1399494743 source:c:\users\jacob\documents\c++ prog\pong\mian.cpp
+
+1399513752 source:c:\users\jacob\documents\c++ prog\pong\object.cpp
+	"Object.h"
+
+1399515560 source:c:\users\jacob\documents\c++ prog\pong\main.cpp
+	<SDL.h>
+	<SDL_image.h>
+	<stdio.h>
+	<string>
+	<iostream>
+	"Controller.h"
+
+1399515821 c:\users\jacob\documents\c++ prog\pong\object.h
+	<SDL.h>
+	<SDL_image.h>
+	<stdio.h>
+	<string>
+	<iostream>
+
+1399515596 source:c:\users\jacob\documents\c++ prog\pong\controller.cpp
+	"Controller.h"
+
+1399508846 c:\users\jacob\documents\c++ prog\pong\controller.h
+	<iostream>
+	"Paddle.h"
+	"Texture.h"
+
+1399510106 c:\users\jacob\documents\c++ prog\pong\paddle.h
+	<SDL.h>
+	<SDL_image.h>
+	<stdio.h>
+	<string>
+	<iostream>
+	"Object.h"
+
+1399515821 source:c:\users\jacob\documents\c++ prog\pong\paddle.cpp
+	"Paddle.h"
+
+1399515622 source:c:\users\jacob\documents\c++ prog\pong\texture.cpp
+	"Texture.h"
+
+1399514634 c:\users\jacob\documents\c++ prog\pong\texture.h
+	<SDL.h>
+	<SDL_image.h>
+	<stdio.h>
+	<string>
+	<iostream>
+
