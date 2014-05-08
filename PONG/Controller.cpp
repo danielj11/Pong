@@ -128,10 +128,12 @@ void Controller::runGame()
 
 			//The objects that will be on the screen
 			Paddle playerOne(20,130); //20, 130
-			playerOne.posX = 50; //50
+			playerOne.hitBox.x = 20;
+			playerOne.hitBox.y = 100;
+			/**playerOne.posX = 50; //50
 			playerOne.posY = 200;//200
 			playerOne.hitBox.w = playerOne.posX;
-			playerOne.hitBox.h = playerOne.posY;
+			playerOne.hitBox.h = playerOne.posY;*/
 
 
 
@@ -165,15 +167,15 @@ void Controller::runGame()
                     std::cout << playerOne.posY << std::endl;
                     std::cout << playerOne.hitBox.w << std::endl;
                     std::cout << playerOne.hitBox.h << std::endl;*/
-                    wall.x += 5;
+                    /*wall.x += 5;
                     wall.y += 5;
                     wall.w = 40;
-                    wall.h = 400;
+                    wall.h = 400;*/
 				}
 
 				//Move the objects
-				playerOne.move(SCREEN_HEIGHT);
-				paddleTexture.render(50, 100, renderer);
+				playerOne.move(SCREEN_HEIGHT, playerOneEvents);
+				//paddleTexture.render(50, 100, renderer);
 
 				//Clear screen
 				SDL_SetRenderDrawColor( renderer, 0xFF, 0xFF, 0xFF, 0xFF );
@@ -184,8 +186,11 @@ void Controller::runGame()
 				SDL_RenderDrawRect( renderer, &wall );
 
 				//Render objects
-				renderObject(playerOne);
+				//renderObject(playerOne);
 				//std::cout << "test" <<std::endl;
+				SDL_SetRenderDrawColor( renderer, 255, 192, 203, 100 );
+				SDL_RenderFillRect(renderer, &playerOne.hitBox);
+				SDL_RenderDrawRect( renderer, &playerOne.hitBox );
 
 				//Update screen
 				SDL_RenderPresent(renderer);

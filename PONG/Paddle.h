@@ -13,7 +13,7 @@ class Paddle: public Object
 {
 public:
     Paddle(int paddleW, int paddleH);
-    void move(int screenH);
+    void move(int screenH,  SDL_Event& e );
     void handleEvent( SDL_Event& e );
     int width;
     int height;

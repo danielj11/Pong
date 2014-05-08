@@ -1,12 +1,15 @@
 #include "Paddle.h"
 
-//Sets padddle height and width depending on intputs
+//Sets padddle height and width depending on inputs
 Paddle::Paddle(int paddleW, int paddleH)
 {
-    width = paddleW;
-    height = paddleH;
+    //width = paddleW;
+    //height = paddleH;
+    hitBox.w = paddleW;
+    hitBox.h = paddleH;
+    speed = 10;
 
-    //Will add back later
+    ///Will add back later
     /*if (computerPlayer)
     {
         playerControlled = false;
@@ -15,12 +18,48 @@ Paddle::Paddle(int paddleW, int paddleH)
     {
         playerControlled = true;
     }*/
+
+
 }
 
-void Paddle::move(int screenH)
+void Paddle::move(int screenH,  SDL_Event& e )
 {
+
+    //If a key was pressed
+	/*if( e.type == SDL_KEYDOWN && e.key.repeat == 0 )
+    {
+        //Adjust the velocity
+        switch( e.key.keysym.sym )
+        {
+            case SDLK_UP: hitBox.y -= speed; std::cout << "UP" << std::endl; break;
+            case SDLK_DOWN: hitBox.y = hitBox.y + speed; std::cout << "DOWN" << std::endl; break;
+            case SDLK_LEFT: velocityX -= speed; break;
+            case SDLK_RIGHT: velocityX += speed; break;
+        }
+    }
+    //If a key was released
+    else if( e.type == SDL_KEYUP && e.key.repeat == 0 )
+    {
+        //Adjust the velocity
+        switch( e.key.keysym.sym )
+        {
+            case SDLK_UP: hitBox.y += speed; break;
+            case SDLK_DOWN: hitBox.y -= speed; break;
+            //case SDLK_LEFT: velocityX += speed; break;
+            //case SDLK_RIGHT: velocityX -= speed; break;
+        }
+    }*/
+
+    hitBox.y = hitBox.y + velocityY;
+    int distanceFromBottom = hitBox.y + hitBox.h;
+
+    if(hitBox.y < 0 || distanceFromBottom > screenH)
+    {
+        hitBox.y = hitBox.y - velocityY;
+    }
+
     //Move the paddle up or down
-    posY += velocityY;
+    /*posY += velocityY;
 	hitBox.y = posY;
 
     //If the paddle went too far up or down
@@ -29,7 +68,7 @@ void Paddle::move(int screenH)
         //Move back
         posY -= velocityY;
 		hitBox.y = posY;
-    }
+    }*/
 }
 
 void Paddle::handleEvent( SDL_Event& e )
