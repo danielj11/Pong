@@ -51,12 +51,13 @@
 1399606480 source:c:\users\jacob\documents\github\pong\pong\controller.cpp
 	"Controller.h"
 
-1399605860 c:\users\jacob\documents\github\pong\pong\controller.h
+1399667214 c:\users\jacob\documents\github\pong\pong\controller.h
 	"SDL.h"
 	"SDL_mixer.h"
 	<iostream>
 	<cassert>
 	"Paddle.h"
+	"SDL_ttf.h"
 
 1399606187 c:\users\jacob\documents\github\pong\pong\paddle.h
 	<SDL.h>

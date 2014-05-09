@@ -6,6 +6,7 @@
 #include <iostream>
 #include <cassert>
 #include "Paddle.h"
+#include "SDL_ttf.h"
 
 using std::cout;
 using std::endl;
