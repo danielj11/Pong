@@ -10,16 +10,16 @@
 class Object
 {
     public:
+        //Initializes the variables
+		Object();
+
 		//Maximum axis velocity of the dot
 		int maxVelocity;
 
-		//Initializes the variables
-		Object();
-
-		//Starting position
+		//Postion of the object
 		int posX, posY;
 
-		//Starting velocity, may not need
+		//Velocity for each direction
 		int velocityX, velocityY;
 
 		//Object's collision box

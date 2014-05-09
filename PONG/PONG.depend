@@ -48,13 +48,14 @@
 	<string>
 	<iostream>
 
-1399579928 source:c:\users\jacob\documents\github\pong\pong\controller.cpp
+1399600561 source:c:\users\jacob\documents\github\pong\pong\controller.cpp
 	"Controller.h"
 
-1399580173 c:\users\jacob\documents\github\pong\pong\controller.h
+1399599560 c:\users\jacob\documents\github\pong\pong\controller.h
+	"SDL.h"
 	<iostream>
+	<cassert>
 	"Paddle.h"
-	"Texture.h"
 
 1399578534 c:\users\jacob\documents\github\pong\pong\paddle.h
 	<SDL.h>
@@ -64,7 +65,7 @@
 	<iostream>
 	"Object.h"
 
-1399515821 c:\users\jacob\documents\github\pong\pong\object.h
+1399600610 c:\users\jacob\documents\github\pong\pong\object.h
 	<SDL.h>
 	<SDL_image.h>
 	<stdio.h>
@@ -78,7 +79,7 @@
 	<string>
 	<iostream>
 
-1399515560 source:c:\users\jacob\documents\github\pong\pong\main.cpp
+1399600581 source:c:\users\jacob\documents\github\pong\pong\main.cpp
 	<SDL.h>
 	<SDL_image.h>
 	<stdio.h>
@@ -86,10 +87,10 @@
 	<iostream>
 	"Controller.h"
 
-1399513752 source:c:\users\jacob\documents\github\pong\pong\object.cpp
+1399592159 source:c:\users\jacob\documents\github\pong\pong\object.cpp
 	"Object.h"
 
-1399580131 source:c:\users\jacob\documents\github\pong\pong\paddle.cpp
+1399598880 source:c:\users\jacob\documents\github\pong\pong\paddle.cpp
 	"Paddle.h"
 
 1399515622 source:c:\users\jacob\documents\github\pong\pong\texture.cpp
