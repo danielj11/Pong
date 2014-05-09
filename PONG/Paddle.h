@@ -12,9 +12,13 @@
 class Paddle: public Object
 {
 public:
-    Paddle(int paddleW, int paddleH);
+    Paddle();
     void move(int screenH,  SDL_Event& e );
     void handleEvent( SDL_Event& e );
+    void setWidth(int newWidth);
+    void setHeight(int newHeight);
+    void setPosX(int newX);
+    void setPosY(int newY);
     int width;
     int height;
     int speed;

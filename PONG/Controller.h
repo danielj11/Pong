@@ -2,6 +2,7 @@
 #define CONTROLLER_H
 
 #include "SDL.h"
+#include "SDL_mixer.h"
 #include <iostream>
 #include <cassert>
 #include "Paddle.h"
@@ -20,7 +21,11 @@ public:
     void runGame();
     bool initialize();
     void closeGame();
+    void processInput(SDL_Event& e);
 private:
+    Paddle playerOne;
+    Paddle playerTwo;
+    Mix_Music* NyanTheSong;
     SDL_Window* gWindow; //Window that will show game
     SDL_Renderer* renderer; //Renderer for the game
 };

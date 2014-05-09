@@ -9,6 +9,8 @@ Object::Object()
 	//Set collision box dimension
 	hitBox.w = 0;
 	hitBox.h = 0;
+	hitBox.x = 0;
+	hitBox.y = 0;
 
     //used by functions in derived classes
 	velocityX = 0;

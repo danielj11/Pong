@@ -1,10 +1,8 @@
 #include "Paddle.h"
 
 //Sets padddle height and width depending on inputs
-Paddle::Paddle(int paddleW, int paddleH)
+Paddle::Paddle()
 {
-    hitBox.w = paddleW;
-    hitBox.h = paddleH;
     speed = 7;
 
     ///Will add back later
@@ -18,6 +16,26 @@ Paddle::Paddle(int paddleW, int paddleH)
     }*/
 
 
+}
+
+void Paddle::setWidth(int newWidth)
+{
+    hitBox.w = newWidth;
+}
+
+void Paddle::setHeight(int newHeight)
+{
+    hitBox.h = newHeight + 30;
+}
+
+void Paddle::setPosX(int newX)
+{
+    hitBox.x = newX;
+}
+
+void Paddle::setPosY(int newY)
+{
+    hitBox.y = newY;
 }
 
 void Paddle::move(int screenH,  SDL_Event& e )

@@ -1,5 +1,7 @@
 #include "Controller.h"
 
+#define DICKBUTT 100
+
 Controller::Controller()
 {
     gWindow = NULL;
@@ -12,33 +14,33 @@ bool Controller::initialize()
 	bool success = true;
 
 	//Initialize SDL
-	if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
+	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
 	{
-		//std::cout << "SDL could not initialize! SDL Error: " <<  SDL_GetError() << std::endl;
+		cout << "SDL could not initialize! SDL Error: " <<  SDL_GetError() << endl;
 		success = false;
 	}
 	else
 	{
 		//Set texture filtering to linear
-		if( !SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" ) )
+		if(!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"))
 		{
-			//std::cout << "Warning: Linear texture filtering not enabled!" << std::endl;
+			cout << "Warning: Linear texture filtering not enabled!" << endl;
 		}
 
 		//Create window
-		gWindow = SDL_CreateWindow( "Nyan Pong!", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
-		if( gWindow == NULL )
+		gWindow = SDL_CreateWindow( "Nyan Pong!", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+		if(gWindow == NULL)
 		{
-			//std::cout << "Window could not be created! SDL Error: " << SDL_GetError() << std::endl;
+			cout << "Window could not be created! SDL Error: " << SDL_GetError() << endl;
 			success = false;
 		}
 		else
 		{
 			//Create vsynced renderer for window
-			renderer = SDL_CreateRenderer( gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
-			if( renderer == NULL )
+			renderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+			if(renderer == NULL)
 			{
-				//std::cout << "Renderer could not be created! SDL Error: " << SDL_GetError() << std::endl;
+				cout << "Renderer could not be created! SDL Error: " << SDL_GetError() << endl;
 				success = false;
 			}
 			else
@@ -48,15 +50,20 @@ bool Controller::initialize()
 
 				//Initialize PNG loading
 				int imgFlags = IMG_INIT_PNG;
-				if( !( IMG_Init( imgFlags ) & imgFlags ) )
+				if(!(IMG_Init(imgFlags) & imgFlags))
 				{
-					//std::cout << "SDL_image could not initialize! SDL_image Error: " <<  IMG_GetError() << std::endl;
+					cout << "SDL_image could not initialize! SDL_image Error: " <<  IMG_GetError() << endl;
 					success = false;
 				}
+				//Initialize SDL_mixer
+				if(Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0)
+				{
+                    cout << "SDL_mixer could not initialize! SDL_mixer Error: " << Mix_GetError() << endl;
+                    success = false;
+                }
 			}
 		}
 	}
-
 	return success;
 }
 
@@ -68,7 +75,12 @@ void Controller::closeGame()
 	gWindow = NULL;
 	renderer = NULL;
 
+	//Free the music
+    Mix_FreeMusic(NyanTheSong);
+    NyanTheSong = NULL;
+
 	//Quit SDL and SDL_Image
+	Mix_Quit();
 	IMG_Quit();
 	SDL_Quit();
 }
@@ -78,7 +90,7 @@ void Controller::runGame()
     //Start up SDL and create window
 	if( !initialize() )
 	{
-		//std::cout << "Failed to initialize!"  << std::endl;
+		cout << "Failed to initialize!"  << endl;
 	}
 	else
 	{
@@ -89,6 +101,11 @@ void Controller::runGame()
         //paddleP2 colors
         int colorChangeP2 = 0; //how long till color change (don't seizure it)
         int colorChoiceP2 = 3; //switch for colors
+
+        //Music (NYAN!)
+        NyanTheSong = NULL;
+        NyanTheSong = Mix_LoadMUS("sounds/NyanTheSong.mp3");
+        assert(NyanTheSong != NULL);
 
         SDL_Surface* BgSurface = NULL; //background surface
         SDL_Texture* Bg = NULL; //background
@@ -105,26 +122,33 @@ void Controller::runGame()
         //Event handler
         SDL_Event playerOneEvents;
         //SDL_Event playerTwoEvents;
+        SDL_Event NyanBITCH;
 
         //The objects that will be on the screen
-        Paddle playerOne(20,130); //20, 130
-        playerOne.hitBox.x = 20;
-        playerOne.hitBox.y = 100;
+        playerOne.setWidth(20);
+        playerOne.setHeight(DICKBUTT);
+        playerOne.setPosX(20);
+        playerOne.setPosY(DICKBUTT+130);
+
+        playerTwo.setWidth(20);
+        playerTwo.setHeight(DICKBUTT);
+        playerTwo.setPosX(SCREEN_WIDTH - 40);
+        playerTwo.setPosY(DICKBUTT+130);
 
         //While game is still going
         while( !quit )
         {
             //Handle events on queue
-            while( SDL_PollEvent( &playerOneEvents ) != 0 )
+            while(SDL_PollEvent(&NyanBITCH) != 0)
             {
                 //User requests quit
-                if( playerOneEvents.type == SDL_QUIT )
+                if(NyanBITCH.type == SDL_QUIT)
                 {
                     quit = true;
                 }
 
                 //Handle input for the paddle(s)
-                playerOne.handleEvent(playerOneEvents);
+                processInput(NyanBITCH);
             }
 
             //Move the objects
@@ -176,6 +200,9 @@ void Controller::runGame()
             SDL_RenderFillRect(renderer, &playerOne.hitBox);
             SDL_RenderDrawRect(renderer, &playerOne.hitBox);
 
+            SDL_RenderFillRect(renderer, &playerTwo.hitBox);
+            SDL_RenderDrawRect(renderer, &playerTwo.hitBox);
+
             //Update screen
             SDL_RenderPresent(renderer);
 
@@ -186,4 +213,42 @@ void Controller::runGame()
 
 	//Close SDL
 	closeGame();
+}
+
+//universal events, not player specific
+void Controller::processInput(SDL_Event& e)
+{
+    //will skip player input if not available
+    playerOne.handleEvent(e);
+    //playerTwo.handleEvent(e);
+
+    if (e.type == SDL_KEYDOWN)
+    {
+        //pause and play music
+        switch (e.key.keysym.sym)
+        {
+        case SDLK_m:
+            //If there is no music playing
+            if(Mix_PlayingMusic() == 0)
+            {
+                //Play the music
+                Mix_PlayMusic(NyanTheSong, -1);
+            }
+            else //music is being played
+            {
+                //If the music is paused
+                if( Mix_PausedMusic() == 1)
+                {
+                    //Resume the music
+                    Mix_ResumeMusic();
+                }
+                else //music is playing
+                {
+                    //Pause the music
+                    Mix_PauseMusic();
+                }
+            }
+            break;
+        }
+    }
 }
