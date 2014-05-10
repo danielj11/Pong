@@ -1,11 +1,13 @@
 #include "Controller.h"
 
-#define DICKBUTT 100
+#define PADDLE_HEIGHT 100
+#define PADDLE_WIDTH 20
 
 Controller::Controller()
 {
     gWindow = NULL;
     renderer = renderer = SDL_CreateRenderer(gWindow, -1, 0);
+    NyanTheSong = NULL;
 }
 
 bool Controller::initialize()
@@ -122,33 +124,33 @@ void Controller::runGame()
         //Event handler
         SDL_Event playerOneEvents;
         //SDL_Event playerTwoEvents;
-        SDL_Event NyanBITCH;
+        SDL_Event NyanBGM;
 
         //The objects that will be on the screen
-        playerOne.setWidth(20);
-        playerOne.setHeight(DICKBUTT);
+        playerOne.setWidth(PADDLE_WIDTH);
+        playerOne.setHeight(PADDLE_HEIGHT);
         playerOne.setPosX(20);
-        playerOne.setPosY(DICKBUTT+130);
+        playerOne.setPosY(230);
 
-        playerTwo.setWidth(20);
-        playerTwo.setHeight(DICKBUTT);
+        playerTwo.setWidth(PADDLE_WIDTH);
+        playerTwo.setHeight(PADDLE_HEIGHT);
         playerTwo.setPosX(SCREEN_WIDTH - 40);
-        playerTwo.setPosY(DICKBUTT+130);
+        playerTwo.setPosY(230);
 
         //While game is still going
         while( !quit )
         {
             //Handle events on queue
-            while(SDL_PollEvent(&NyanBITCH) != 0)
+            while(SDL_PollEvent(&NyanBGM) != 0)
             {
                 //User requests quit
-                if(NyanBITCH.type == SDL_QUIT)
+                if(NyanBGM.type == SDL_QUIT)
                 {
                     quit = true;
                 }
 
                 //Handle input for the paddle(s)
-                processInput(NyanBITCH);
+                processInput(NyanBGM);
             }
 
             //Move the objects
