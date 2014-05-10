@@ -12,6 +12,7 @@ class Object
     public:
         //Initializes the variables
 		Object();
+		~Object();
 
 		//Maximum axis velocity of the dot
 		int maxVelocity;

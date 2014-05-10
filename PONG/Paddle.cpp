@@ -7,6 +7,10 @@ Paddle::Paddle()
     AIControlled = false;
 }
 
+Paddle::~Paddle()
+{
+}
+
 void Paddle::setWidth(int newWidth)
 {
     hitBox.w = newWidth;
@@ -27,6 +31,7 @@ void Paddle::setPosY(int newY)
     hitBox.y = newY;
 }
 
+//Moves paddle to new location
 void Paddle::move(int screenH,  SDL_Event& e )
 {
     hitBox.y = hitBox.y + velocityY;
@@ -38,6 +43,7 @@ void Paddle::move(int screenH,  SDL_Event& e )
     }
 }
 
+//Moves AI paddle to new location
 void Paddle::moveAI(int screenH, int ballPosY)
 {
     if (ballPosY < hitBox.y)
@@ -60,6 +66,7 @@ void Paddle::moveAI(int screenH, int ballPosY)
     }
 }
 
+//Processing input for player one movement
 void Paddle::handleEvent( SDL_Event& e )
 {
     //If a key was pressed
@@ -84,6 +91,7 @@ void Paddle::handleEvent( SDL_Event& e )
     }
 }
 
+//Processing input for player two movement
 void Paddle::handleEventP2( SDL_Event& e )
 {
     //If a key was pressed

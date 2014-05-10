@@ -14,12 +14,11 @@ using std::endl;
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
 
-
-
 class Controller
 {
 public:
     Controller();
+    ~Controller();
     bool initialize();
     void runGame();
     void closeGame();
@@ -28,7 +27,7 @@ public:
 private:
     Paddle playerOne;
     Paddle playerTwo;
-    Mix_Music* NyanTheSong;
+    Mix_Music* NyanTheSong; //Song loader
     SDL_Window* gWindow; //Window that will show game
     SDL_Renderer* renderer; //Renderer for the game
 };

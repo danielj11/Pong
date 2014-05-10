@@ -13,6 +13,7 @@ class Paddle: public Object
 {
 public:
     Paddle();
+    ~Paddle();
     void move(int screenH,  SDL_Event& e );
     void moveAI(int screenH, int ballPosY);
     void handleEvent( SDL_Event& e );
@@ -22,8 +23,6 @@ public:
     void setPosX(int newX);
     void setPosY(int newY);
 
-    int width;
-    int height;
     int speed;
     bool AIControlled;
 };

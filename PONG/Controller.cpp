@@ -10,83 +10,11 @@ Controller::Controller()
     NyanTheSong = NULL;
 }
 
-bool Controller::initialize()
+Controller::~Controller()
 {
-	//Initialization flag
-	bool success = true;
-
-	//Initialize SDL
-	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
-	{
-		cout << "SDL could not initialize! SDL Error: " <<  SDL_GetError() << endl;
-		success = false;
-	}
-	else
-	{
-		//Set texture filtering to linear
-		if(!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"))
-		{
-			cout << "Warning: Linear texture filtering not enabled!" << endl;
-		}
-
-		//Create window
-		gWindow = SDL_CreateWindow( "Nyan Pong!", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-		if(gWindow == NULL)
-		{
-			cout << "Window could not be created! SDL Error: " << SDL_GetError() << endl;
-			success = false;
-		}
-		else
-		{
-			//Create vsynced renderer for window
-			renderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-			if(renderer == NULL)
-			{
-				cout << "Renderer could not be created! SDL Error: " << SDL_GetError() << endl;
-				success = false;
-			}
-			else
-			{
-				//Initialize renderer color
-				SDL_SetRenderDrawColor( renderer, 0xFF, 0xFF, 0xFF, 0xFF );
-
-				//Initialize PNG loading
-				int imgFlags = IMG_INIT_PNG;
-				if(!(IMG_Init(imgFlags) & imgFlags))
-				{
-					cout << "SDL_image could not initialize! SDL_image Error: " <<  IMG_GetError() << endl;
-					success = false;
-				}
-				//Initialize SDL_mixer
-				if(Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0)
-				{
-                    cout << "SDL_mixer could not initialize! SDL_mixer Error: " << Mix_GetError() << endl;
-                    success = false;
-                }
-			}
-		}
-	}
-	return success;
 }
 
-void Controller::closeGame()
-{
-	//Destroy window
-	SDL_DestroyRenderer( renderer );
-	SDL_DestroyWindow( gWindow );
-	gWindow = NULL;
-	renderer = NULL;
-
-	//Free the music
-    Mix_FreeMusic(NyanTheSong);
-    NyanTheSong = NULL;
-
-	//Quit SDL and SDL_Image
-	Mix_Quit();
-	IMG_Quit();
-	SDL_Quit();
-}
-
+//Function that runs the game
 void Controller::runGame()
 {
     //Start up SDL and create window
@@ -217,6 +145,83 @@ void Controller::runGame()
 	closeGame();
 }
 
+bool Controller::initialize()
+{
+	//Initialization flag
+	bool success = true;
+
+	//Initialize SDL
+	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
+	{
+		cout << "SDL could not initialize! SDL Error: " <<  SDL_GetError() << endl;
+		success = false;
+	}
+	else
+	{
+		//Set texture filtering to linear
+		if(!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"))
+		{
+			cout << "Warning: Linear texture filtering not enabled!" << endl;
+		}
+
+		//Create window
+		gWindow = SDL_CreateWindow( "Nyan Pong!", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+		if(gWindow == NULL)
+		{
+			cout << "Window could not be created! SDL Error: " << SDL_GetError() << endl;
+			success = false;
+		}
+		else
+		{
+			//Create vsynced renderer for window
+			renderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+			if(renderer == NULL)
+			{
+				cout << "Renderer could not be created! SDL Error: " << SDL_GetError() << endl;
+				success = false;
+			}
+			else
+			{
+				//Initialize renderer color
+				SDL_SetRenderDrawColor( renderer, 0xFF, 0xFF, 0xFF, 0xFF );
+
+				//Initialize PNG loading
+				int imgFlags = IMG_INIT_PNG;
+				if(!(IMG_Init(imgFlags) & imgFlags))
+				{
+					cout << "SDL_image could not initialize! SDL_image Error: " <<  IMG_GetError() << endl;
+					success = false;
+				}
+				//Initialize SDL_mixer
+				if(Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0)
+				{
+                    cout << "SDL_mixer could not initialize! SDL_mixer Error: " << Mix_GetError() << endl;
+                    success = false;
+                }
+			}
+		}
+	}
+	return success;
+}
+
+void Controller::closeGame()
+{
+	//Destroy window
+	SDL_DestroyRenderer( renderer );
+	SDL_DestroyWindow( gWindow );
+	gWindow = NULL;
+	renderer = NULL;
+
+	//Free the music
+    Mix_FreeMusic(NyanTheSong);
+    NyanTheSong = NULL;
+
+	//Quit SDL and SDL_Image
+	Mix_Quit();
+	IMG_Quit();
+	SDL_Quit();
+}
+
 //universal events, not player specific
 void Controller::processInput(SDL_Event& e)
 {
@@ -260,13 +265,16 @@ void Controller::processInput(SDL_Event& e)
     }
 }
 
+//Sets paddle starting positions and determines if player 2 is AI controlled
 void Controller::setPaddles(bool isAI)
 {
+    //Set player one variables
     playerOne.setWidth(PADDLE_WIDTH);
     playerOne.setHeight(PADDLE_HEIGHT);
     playerOne.setPosX(20);
     playerOne.setPosY(230);
 
+    //Set player two variables
     playerTwo.setWidth(PADDLE_WIDTH);
     playerTwo.setHeight(PADDLE_HEIGHT);
     playerTwo.setPosX(SCREEN_WIDTH - 40);
@@ -277,5 +285,4 @@ void Controller::setPaddles(bool isAI)
         playerTwo.AIControlled = true;
         playerTwo.speed = 5;
     }
-
 }
