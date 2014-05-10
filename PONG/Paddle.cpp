@@ -4,18 +4,7 @@
 Paddle::Paddle()
 {
     speed = 7;
-
-    ///Will add back later
-    /*if (computerPlayer)
-    {
-        playerControlled = false;
-    }
-    else
-    {
-        playerControlled = true;
-    }*/
-
-
+    AIControlled = false;
 }
 
 void Paddle::setWidth(int newWidth)
@@ -49,7 +38,53 @@ void Paddle::move(int screenH,  SDL_Event& e )
     }
 }
 
+void Paddle::moveAI(int screenH, int ballPosY)
+{
+    if (ballPosY < hitBox.y)
+    {
+        hitBox.y = hitBox.y - speed;
+    }
+    else if(ballPosY > hitBox.y)
+    {
+        hitBox.y = hitBox.y + speed;
+    }
+
+    //Bounds checking
+    if(hitBox.y < 0)
+    {
+        hitBox.y = 0;
+    }
+    else if(hitBox.y > screenH - hitBox.h)
+    {
+        hitBox.y = screenH - hitBox.h;
+    }
+}
+
 void Paddle::handleEvent( SDL_Event& e )
+{
+    //If a key was pressed
+	if( e.type == SDL_KEYDOWN && e.key.repeat == 0 )
+    {
+        //Adjust the velocity
+        switch( e.key.keysym.sym )
+        {
+            case SDLK_w: velocityY -= speed; break;
+            case SDLK_s: velocityY += speed; break;
+        }
+    }
+    //If a key was released
+    else if( e.type == SDL_KEYUP && e.key.repeat == 0 )
+    {
+        //Adjust the velocity
+        switch( e.key.keysym.sym )
+        {
+            case SDLK_w: velocityY += speed; break;
+            case SDLK_s: velocityY -= speed; break;
+        }
+    }
+}
+
+void Paddle::handleEventP2( SDL_Event& e )
 {
     //If a key was pressed
 	if( e.type == SDL_KEYDOWN && e.key.repeat == 0 )

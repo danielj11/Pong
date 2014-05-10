@@ -15,14 +15,16 @@ const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
 
 
+
 class Controller
 {
 public:
     Controller();
-    void runGame();
     bool initialize();
+    void runGame();
     void closeGame();
     void processInput(SDL_Event& e);
+    void setPaddles(bool isAI);
 private:
     Paddle playerOne;
     Paddle playerTwo;

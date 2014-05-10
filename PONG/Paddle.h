@@ -14,15 +14,18 @@ class Paddle: public Object
 public:
     Paddle();
     void move(int screenH,  SDL_Event& e );
+    void moveAI(int screenH, int ballPosY);
     void handleEvent( SDL_Event& e );
+    void handleEventP2( SDL_Event& e );
     void setWidth(int newWidth);
     void setHeight(int newHeight);
     void setPosX(int newX);
     void setPosY(int newY);
+
     int width;
     int height;
     int speed;
-    bool playerControlled;
+    bool AIControlled;
 };
 
 #endif // PADDLE_H

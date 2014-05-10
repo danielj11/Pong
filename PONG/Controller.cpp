@@ -96,11 +96,11 @@ void Controller::runGame()
 	}
 	else
 	{
-	    //paddleP1 colors
+	    //Player 1 paddle colors
         int colorChangeP1 = 0; //how long till color change (don't seizure it)
         int colorChoiceP1 = 0; //switch for colors
 
-        //paddleP2 colors
+        //Player 2 paddle colors
         int colorChangeP2 = 0; //how long till color change (don't seizure it)
         int colorChoiceP2 = 3; //switch for colors
 
@@ -122,20 +122,11 @@ void Controller::runGame()
         bool quit = false;
 
         //Event handler
-        SDL_Event playerOneEvents;
-        //SDL_Event playerTwoEvents;
+        SDL_Event gameEvents;
         SDL_Event NyanBGM;
 
-        //The objects that will be on the screen
-        playerOne.setWidth(PADDLE_WIDTH);
-        playerOne.setHeight(PADDLE_HEIGHT);
-        playerOne.setPosX(20);
-        playerOne.setPosY(230);
-
-        playerTwo.setWidth(PADDLE_WIDTH);
-        playerTwo.setHeight(PADDLE_HEIGHT);
-        playerTwo.setPosX(SCREEN_WIDTH - 40);
-        playerTwo.setPosY(230);
+        //The paddles are set here
+        setPaddles(false); ///Change this to true for an AI paddle
 
         //While game is still going
         while( !quit )
@@ -154,7 +145,16 @@ void Controller::runGame()
             }
 
             //Move the objects
-            playerOne.move(SCREEN_HEIGHT, playerOneEvents);
+            playerOne.move(SCREEN_HEIGHT, gameEvents);
+
+            if (playerTwo.AIControlled)
+            {
+                playerTwo.moveAI(SCREEN_HEIGHT, playerOne.hitBox.y);
+            }
+            else
+            {
+                playerTwo.move(SCREEN_HEIGHT, gameEvents);
+            }
 
             //Clear screen
             SDL_RenderCopy(renderer, Bg, NULL, NULL);
@@ -222,6 +222,11 @@ void Controller::processInput(SDL_Event& e)
 {
     //will skip player input if not available
     playerOne.handleEvent(e);
+
+    if (!playerTwo.AIControlled)
+    {
+        playerTwo.handleEventP2(e);
+    }
     //playerTwo.handleEvent(e);
 
     if (e.type == SDL_KEYDOWN)
@@ -253,4 +258,24 @@ void Controller::processInput(SDL_Event& e)
             break;
         }
     }
+}
+
+void Controller::setPaddles(bool isAI)
+{
+    playerOne.setWidth(PADDLE_WIDTH);
+    playerOne.setHeight(PADDLE_HEIGHT);
+    playerOne.setPosX(20);
+    playerOne.setPosY(230);
+
+    playerTwo.setWidth(PADDLE_WIDTH);
+    playerTwo.setHeight(PADDLE_HEIGHT);
+    playerTwo.setPosX(SCREEN_WIDTH - 40);
+    playerTwo.setPosY(230);
+
+    if (isAI)
+    {
+        playerTwo.AIControlled = true;
+        playerTwo.speed = 5;
+    }
+
 }
