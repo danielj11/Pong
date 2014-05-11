@@ -59,17 +59,31 @@ void Controller::runGame()
         dash = SDL_LoadBMP("images/dash.bmp");
         SDL_Rect dashRect;
         dashRect.y = 0;
-        dashRect.x = 0;
+        dashRect.x = 374;
+        dashRect.h = 52;
+        dashRect.w = 43;
         dashTex = SDL_CreateTextureFromSurface(renderer,dash);
-        dashRect.h = 256;
-        dashRect.w = 256;
-        SDL_Rect destination;
-        destination.x = 374;
-        destination.y = 0;
-        destination.h = 43;
-        destination.w = 52;
-        //End of score display test
 
+        SDL_Surface* scoreP1 = NULL;
+        SDL_Texture* scoreP1Tex = NULL;
+        scoreP1 = SDL_LoadBMP("images/score0.bmp");
+        SDL_Rect P1ScoreRect;
+        P1ScoreRect.y = 0;
+        P1ScoreRect.x = 328;
+        scoreP1Tex = SDL_CreateTextureFromSurface(renderer,scoreP1);
+        P1ScoreRect.h = 52;
+        P1ScoreRect.w = 43;
+
+        SDL_Surface* scoreP2 = NULL;
+        SDL_Texture* scoreP2Tex = NULL;
+        scoreP2 = SDL_LoadBMP("images/score0.bmp");
+        SDL_Rect P2ScoreRect;
+        P2ScoreRect.y = 0;
+        P2ScoreRect.x = 418;
+        scoreP2Tex = SDL_CreateTextureFromSurface(renderer,scoreP2);
+        P2ScoreRect.h = 52;
+        P2ScoreRect.w = 43;
+        //End of score display test
 
         //The paddles are set here
         setPaddles(false); ///Change this to true for an AI paddle
@@ -104,7 +118,9 @@ void Controller::runGame()
 
             //Clear screen
             SDL_RenderCopy(renderer, Bg, NULL, NULL);
-            SDL_RenderCopy(renderer,dashTex, &dashRect, &destination);
+            SDL_RenderCopy(renderer,dashTex, NULL, &dashRect);
+            SDL_RenderCopy(renderer,scoreP1Tex, NULL, &P1ScoreRect);
+            SDL_RenderCopy(renderer,scoreP2Tex, NULL, &P2ScoreRect);
 
             //Make P1 paddle the color of the rainbow (it switches every so often)
             if (colorChangeP1 == 15)

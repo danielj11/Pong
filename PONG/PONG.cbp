@@ -37,10 +37,7 @@
 		<Unit filename="Object.h" />
 		<Unit filename="Paddle.cpp" />
 		<Unit filename="Paddle.h" />
-		<Unit filename="Texture.cpp" />
-		<Unit filename="Texture.h" />
 		<Unit filename="main.cpp" />
-		<Unit filename="mian.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
