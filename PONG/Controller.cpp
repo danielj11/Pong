@@ -53,6 +53,24 @@ void Controller::runGame()
         SDL_Event gameEvents;
         SDL_Event NyanBGM;
 
+        //Testing score display
+        SDL_Surface* dash = NULL;
+        SDL_Texture* dashTex = NULL;
+        dash = SDL_LoadBMP("images/dash.bmp");
+        SDL_Rect dashRect;
+        dashRect.y = 0;
+        dashRect.x = 0;
+        dashTex = SDL_CreateTextureFromSurface(renderer,dash);
+        dashRect.h = 256;
+        dashRect.w = 256;
+        SDL_Rect destination;
+        destination.x = 374;
+        destination.y = 0;
+        destination.h = 43;
+        destination.w = 52;
+        //End of score display test
+
+
         //The paddles are set here
         setPaddles(false); ///Change this to true for an AI paddle
 
@@ -86,6 +104,7 @@ void Controller::runGame()
 
             //Clear screen
             SDL_RenderCopy(renderer, Bg, NULL, NULL);
+            SDL_RenderCopy(renderer,dashTex, &dashRect, &destination);
 
             //Make P1 paddle the color of the rainbow (it switches every so often)
             if (colorChangeP1 == 15)
