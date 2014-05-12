@@ -6,8 +6,9 @@
 Controller::Controller()
 {
     gWindow = NULL;
-    renderer = renderer = SDL_CreateRenderer(gWindow, -1, 0);
+    renderer = SDL_CreateRenderer(gWindow, -1, 0);
     NyanTheSong = NULL;
+    paddleOpp = true;
 }
 
 Controller::~Controller()
@@ -29,7 +30,7 @@ void Controller::runGame()
         int colorChoiceP1 = 0; //switch for colors
 
         //Player 2 paddle colors
-        int colorChangeP2 = 0; //how long till color change (don't seizure it)
+        int colorChangeP2 = 8; //how long till color change (don't seizure it)
         int colorChoiceP2 = 3; //switch for colors
 
         //Music (NYAN!)
@@ -85,8 +86,19 @@ void Controller::runGame()
         P2ScoreRect.w = 43;
         //End of score display test
 
-        //The paddles are set here
-        setPaddles(false); ///Change this to true for an AI paddle
+        //Set player one variables
+        playerOne.setWidth(PADDLE_WIDTH);
+        playerOne.setHeight(PADDLE_HEIGHT);
+        playerOne.setPosX(20);
+        playerOne.setPosY(230);
+
+        //Set player two variables
+        playerTwo.setWidth(PADDLE_WIDTH);
+        playerTwo.setHeight(PADDLE_HEIGHT);
+        playerTwo.setPosX(SCREEN_WIDTH - 40);
+        playerTwo.setPosY(230);
+
+        setPaddles(paddleOpp);//initial opponent paddle set
 
         //While game is still going
         while( !quit )
@@ -122,57 +134,18 @@ void Controller::runGame()
             SDL_RenderCopy(renderer,scoreP1Tex, NULL, &P1ScoreRect);
             SDL_RenderCopy(renderer,scoreP2Tex, NULL, &P2ScoreRect);
 
-            //Make P1 paddle the color of the rainbow (it switches every so often)
-            if (colorChangeP1 == 15)
-            {
-                switch (colorChoiceP1)
-                {
-                case 0: //red
-                    SDL_SetRenderDrawColor( renderer, 255, 0, 0, 0 );
-                    colorChoiceP1++;
-                    colorChangeP1 = 0;
-                    break;
-                case 1: //orange
-                    SDL_SetRenderDrawColor( renderer, 255, 128, 0, 0 );
-                    colorChoiceP1++;
-                    colorChangeP1 = 0;
-                    break;
-                case 2: //yellow
-                    SDL_SetRenderDrawColor( renderer, 255, 255, 0, 0 );
-                    colorChoiceP1++;
-                    colorChangeP1 = 0;
-                    break;
-                case 3: //green
-                    SDL_SetRenderDrawColor( renderer, 0, 255, 0, 0 );
-                    colorChoiceP1++;
-                    colorChangeP1 = 0;
-                    break;
-                case 4: //blue
-                    SDL_SetRenderDrawColor( renderer, 0, 0, 255, 0 );
-                    colorChoiceP1++;
-                    colorChangeP1 = 0;
-                    break;
-                case 5: //purple
-                    SDL_SetRenderDrawColor( renderer, 204, 0, 204, 0 );
-                    colorChoiceP1 = 0;
-                    colorChangeP1 = 0;
-                    break;
-                default: //if error pink, cause why not
-                    SDL_SetRenderDrawColor( renderer, 255, 192, 203, 0 );
-                    colorChoiceP1 = 0;
-                }
-            }
+            colorChange(colorChangeP1, colorChoiceP1);
+
             SDL_RenderFillRect(renderer, &playerOne.hitBox);
             SDL_RenderDrawRect(renderer, &playerOne.hitBox);
+
+            colorChange(colorChangeP2, colorChoiceP2);
 
             SDL_RenderFillRect(renderer, &playerTwo.hitBox);
             SDL_RenderDrawRect(renderer, &playerTwo.hitBox);
 
             //Update screen
             SDL_RenderPresent(renderer);
-
-            //inc color change counter
-            colorChangeP1++;
 		}
 	}
 
@@ -296,6 +269,11 @@ void Controller::processInput(SDL_Event& e)
                 }
             }
             break;
+        case SDLK_p:
+            //The paddles are set here
+            paddleOpp = !paddleOpp;
+            setPaddles(paddleOpp); ///Change this to true for an AI paddle
+            break;
         }
     }
 }
@@ -303,21 +281,59 @@ void Controller::processInput(SDL_Event& e)
 //Sets paddle starting positions and determines if player 2 is AI controlled
 void Controller::setPaddles(bool isAI)
 {
-    //Set player one variables
-    playerOne.setWidth(PADDLE_WIDTH);
-    playerOne.setHeight(PADDLE_HEIGHT);
-    playerOne.setPosX(20);
-    playerOne.setPosY(230);
-
-    //Set player two variables
-    playerTwo.setWidth(PADDLE_WIDTH);
-    playerTwo.setHeight(PADDLE_HEIGHT);
-    playerTwo.setPosX(SCREEN_WIDTH - 40);
-    playerTwo.setPosY(230);
-
     if (isAI)
     {
         playerTwo.AIControlled = true;
         playerTwo.speed = 5;
     }
+    else
+    {
+        playerTwo.AIControlled = false;
+        playerTwo.speed = 7;
+    }
+}
+
+void Controller::colorChange(int& change, int& choice)
+{
+    //Make paddle the color of the rainbow (it switches every so often)
+    if (change == 20)
+    {
+        switch (choice)
+        {
+        case 0: //red
+            SDL_SetRenderDrawColor( renderer, 255, 0, 0, 0 );
+            choice++;
+            change = 0;
+            break;
+        case 1: //orange
+            SDL_SetRenderDrawColor( renderer, 255, 128, 0, 0 );
+            choice++;
+            change = 0;
+            break;
+        case 2: //yellow
+            SDL_SetRenderDrawColor( renderer, 255, 255, 0, 0 );
+            choice++;
+            change = 0;
+            break;
+        case 3: //green
+            SDL_SetRenderDrawColor( renderer, 0, 255, 0, 0 );
+            choice++;
+            change = 0;
+            break;
+        case 4: //blue
+            SDL_SetRenderDrawColor( renderer, 0, 0, 255, 0 );
+            choice++;
+            change = 0;
+            break;
+        case 5: //purple
+            SDL_SetRenderDrawColor( renderer, 204, 0, 204, 0 );
+            choice = 0;
+            change = 0;
+            break;
+        default: //if error pink, cause why not
+            SDL_SetRenderDrawColor( renderer, 255, 192, 203, 0 );
+            choice = 0;
+        }
+    }
+    change++;
 }
