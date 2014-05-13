@@ -24,7 +24,9 @@ public:
     void closeGame();
     void processInput(SDL_Event& e);
     void setPaddles(bool isAI);
+    void colorChange(int& change, int& choice);
 private:
+    bool paddleOpp;
     Paddle playerOne;
     Paddle playerTwo;
     Mix_Music* NyanTheSong; //Song loader
