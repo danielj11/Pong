@@ -28,7 +28,7 @@ public:
     void timer();
 
 private:
-    int originX, originY, velCap;
+    int originX, originY, velCap, negVelCap;
     string texName;
     SDL_Surface* ballTex;
 };

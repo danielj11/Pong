@@ -13,7 +13,9 @@ Ball::Ball(int x = 0, int y = 0, int vx = 0, int vy = 0)
     vX = vx;
     vY = vy;
 
-    velCap = (vx + vy) / 2;
+    //vertical velocity will never go past 10
+    velCap = 10;
+    negVelCap = -10;
 }
 
 Ball::~Ball()
@@ -27,6 +29,8 @@ int Ball::move(int screenH, int screenW, Paddle P1, Paddle P2)
     //1 = playerOne gets a point, 2 = playerTwo gets a point
     int PlayerPlus = 0;
     int adjust = 0;
+    int addToVel = 0;
+    int adjustMod = 5;
 
     /*************
     *  Movement  *
@@ -53,13 +57,70 @@ int Ball::move(int screenH, int screenW, Paddle P1, Paddle P2)
         }
         else //bounce off of P1
         {
-            vX = 45 - vX;
+            vX = -vX;
+
+            //if center vX = 0
+            if (hitBox.y == (P1.hitBox.y + P1.hitBox.h / 2))
+            {
+                vY = 0;
+            }
+            else if (hitBox.y < (P1.hitBox.y + P1.hitBox.h / 2)) //it is above, so add some velocity
+            {
+                adjust = P1.hitBox.y + P1.hitBox.h / 2; //adjust = center of paddle
+
+                while (adjust < hitBox.y)
+                {
+                    adjust++;
+                }
+
+                adjust = -adjust;
+                adjust = adjust / (velCap + adjustMod);
+
+                vY += adjust;
+
+                if (vY < negVelCap)
+                {
+                    vY = negVelCap;
+                }
+
+                if (vY > 0)
+                {
+                    vY = -1;
+                }
+                std::cout << vY << std::endl;
+            }
+            else //it is below, so subtract some velocity
+            {
+                adjust = P1.hitBox.y + P1.hitBox.h / 2;
+
+                //hile it is not at center, adjust to fit
+                while (adjust > hitBox.y)
+                {
+                    adjust++;
+                }
+
+                adjust = adjust / (velCap + adjustMod); //adjust this to something more reasonable
+
+                if (addToVel < 0)
+                {
+                    adjust = 1;
+                }
+
+                vY += adjust;
+
+                if (vY > velCap)
+                {
+                    vY = velCap;
+                }
+
+                std::cout << vY << std::endl;
+            }
         }
     }
 
     //check for the P2 paddles pos
     //is it at or past the P2 paddle?
-    else if(hitBox.x >= (P2.hitBox.x - P2.hitBox.w) + 10)
+    else if(hitBox.x >= (P2.hitBox.x - P2.hitBox.w) + 5)
     {
         //is it above or below the paddle
         if (hitBox.y <= P2.hitBox.y - hitBox.h || hitBox.y >= (P2.hitBox.y + P2.hitBox.h))
@@ -71,6 +132,60 @@ int Ball::move(int screenH, int screenW, Paddle P1, Paddle P2)
         else //bounce off of P2
         {
             vX = -vX;
+
+            //if center vX = 0
+            if (hitBox.y == (P2.hitBox.y + P2.hitBox.h / 2))
+            {
+                vY = 0;
+            }
+            else if (hitBox.y < (P2.hitBox.y + P2.hitBox.h / 2)) //it is above, so add some velocity
+            {
+                adjust = P2.hitBox.y + P2.hitBox.h / 2; //adjust = center of paddle
+
+                while (adjust < hitBox.y)
+                {
+                    adjust++;
+                }
+
+                adjust = -adjust;
+                adjust = adjust / (velCap + adjustMod);
+
+                vY += adjust;
+
+                if (vY < negVelCap)
+                {
+                    vY = negVelCap;
+                }
+
+                if (vY > 0)
+                {
+                    vY = -1;
+                }
+            }
+            else //it is below, so subtract some velocity
+            {
+                adjust = P2.hitBox.y + P2.hitBox.h / 2;
+
+                //hile it is not at center, adjust to fit
+                while (adjust > hitBox.y)
+                {
+                    adjust++;
+                }
+
+                adjust = adjust / (velCap + adjustMod); //adjust this to something more reasonable
+
+                if (addToVel < 0)
+                {
+                    adjust = 1;
+                }
+
+                vY += adjust;
+
+                if (vY > velCap)
+                {
+                    vY = velCap;
+                }
+            }
         }
     }
 

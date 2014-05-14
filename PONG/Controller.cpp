@@ -102,7 +102,7 @@ void Controller::runGame()
             BALLS
         */
 
-        Ball Nyan(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 12, -4);
+        Ball Nyan(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 8, -4);
 
         setPaddles(paddleOpp);//initial opponent paddle set
 
