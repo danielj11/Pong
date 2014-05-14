@@ -6,6 +6,7 @@
 #include <iostream>
 #include <cassert>
 #include "Paddle.h"
+#include "Ball.h"
 #include "SDL_ttf.h"
 
 using std::cout;
@@ -26,7 +27,7 @@ public:
     void setPaddles(bool isAI);
     void colorChange(int& change, int& choice);
 private:
-    bool paddleOpp;
+    bool paddleOpp, quit;
     Paddle playerOne;
     Paddle playerTwo;
     Mix_Music* NyanTheSong; //Song loader

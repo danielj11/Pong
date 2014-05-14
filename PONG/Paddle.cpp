@@ -34,23 +34,23 @@ void Paddle::setPosY(int newY)
 //Moves paddle to new location
 void Paddle::move(int screenH,  SDL_Event& e )
 {
-    hitBox.y = hitBox.y + velocityY;
+    hitBox.y = hitBox.y + vY;
     int distanceFromBottom = hitBox.y + hitBox.h;
 
     if(hitBox.y < 0 || distanceFromBottom >= screenH)
     {
-        hitBox.y = hitBox.y - velocityY;
+        hitBox.y = hitBox.y - vY;
     }
 }
 
 //Moves AI paddle to new location
 void Paddle::moveAI(int screenH, int ballPosY)
 {
-    if (ballPosY < hitBox.y)
+    if (ballPosY < hitBox.y + hitBox.h/2)
     {
         hitBox.y = hitBox.y - speed;
     }
-    else if(ballPosY > hitBox.y)
+    else if(ballPosY > hitBox.y + hitBox.h/2)
     {
         hitBox.y = hitBox.y + speed;
     }
@@ -75,8 +75,8 @@ void Paddle::handleEvent( SDL_Event& e )
         //Adjust the velocity
         switch( e.key.keysym.sym )
         {
-            case SDLK_w: velocityY -= speed; break;
-            case SDLK_s: velocityY += speed; break;
+            case SDLK_w: vY -= speed; break;
+            case SDLK_s: vY += speed; break;
         }
     }
     //If a key was released
@@ -85,8 +85,8 @@ void Paddle::handleEvent( SDL_Event& e )
         //Adjust the velocity
         switch( e.key.keysym.sym )
         {
-            case SDLK_w: velocityY += speed; break;
-            case SDLK_s: velocityY -= speed; break;
+            case SDLK_w: vY += speed; break;
+            case SDLK_s: vY -= speed; break;
         }
     }
 }
@@ -100,8 +100,8 @@ void Paddle::handleEventP2( SDL_Event& e )
         //Adjust the velocity
         switch( e.key.keysym.sym )
         {
-            case SDLK_UP: velocityY -= speed; break;
-            case SDLK_DOWN: velocityY += speed; break;
+            case SDLK_UP: vY -= speed; break;
+            case SDLK_DOWN: vY += speed; break;
         }
     }
     //If a key was released
@@ -110,8 +110,8 @@ void Paddle::handleEventP2( SDL_Event& e )
         //Adjust the velocity
         switch( e.key.keysym.sym )
         {
-            case SDLK_UP: velocityY += speed; break;
-            case SDLK_DOWN: velocityY -= speed; break;
+            case SDLK_UP: vY += speed; break;
+            case SDLK_DOWN: vY -= speed; break;
         }
     }
 }

@@ -29,14 +29,14 @@ void Controller::runGame()
         int colorChangeP1 = 0; //how long till color change (don't seizure it)
         int colorChoiceP1 = 0; //switch for colors
 
+        /**
+            BALLS
+        */
+        bool timerSet = false;
+
         //Player 2 paddle colors
         int colorChangeP2 = 8; //how long till color change (don't seizure it)
         int colorChoiceP2 = 3; //switch for colors
-
-        //Music (NYAN!)
-        NyanTheSong = NULL;
-        NyanTheSong = Mix_LoadMUS("sounds/NyanTheSong.mp3");
-        assert(NyanTheSong != NULL);
 
         SDL_Surface* BgSurface = NULL; //background surface
         SDL_Texture* Bg = NULL; //background
@@ -48,7 +48,7 @@ void Controller::runGame()
         assert(Bg != NULL);
 
         //Main loop flag
-        bool quit = false;
+        quit = false;
 
         //Event handler
         SDL_Event gameEvents;
@@ -98,6 +98,12 @@ void Controller::runGame()
         playerTwo.setPosX(SCREEN_WIDTH - 40);
         playerTwo.setPosY(230);
 
+        /**
+            BALLS
+        */
+
+        Ball Nyan(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 12, -4);
+
         setPaddles(paddleOpp);//initial opponent paddle set
 
         //While game is still going
@@ -112,7 +118,7 @@ void Controller::runGame()
                     quit = true;
                 }
 
-                //Handle input for the paddle(s)
+                //Handle input for the player(s)
                 processInput(NyanBGM);
             }
 
@@ -121,7 +127,7 @@ void Controller::runGame()
 
             if (playerTwo.AIControlled)
             {
-                playerTwo.moveAI(SCREEN_HEIGHT, playerOne.hitBox.y);
+                playerTwo.moveAI(SCREEN_HEIGHT, Nyan.hitBox.y);
             }
             else
             {
@@ -144,6 +150,29 @@ void Controller::runGame()
             SDL_RenderFillRect(renderer, &playerTwo.hitBox);
             SDL_RenderDrawRect(renderer, &playerTwo.hitBox);
 
+            int ballMove = Nyan.move(SCREEN_HEIGHT, SCREEN_WIDTH, playerOne, playerTwo);
+
+            SDL_RenderFillRect(renderer, &Nyan.hitBox);
+            SDL_RenderDrawRect(renderer, &Nyan.hitBox);
+
+            if (timerSet)
+            {
+                Nyan.timer();
+                timerSet = false;
+            }
+
+            //move the ball
+            if(ballMove == 1)
+            {
+                //P1 gets point
+                timerSet = true;
+            }
+            if(ballMove == 2)
+            {
+                //P2 gets point
+                timerSet = true;
+            }
+
             //Update screen
             SDL_RenderPresent(renderer);
 		}
@@ -157,6 +186,11 @@ bool Controller::initialize()
 {
 	//Initialization flag
 	bool success = true;
+
+	        //Music (NYAN!)
+        NyanTheSong = NULL;
+        NyanTheSong = Mix_LoadMUS("sounds/NyanTheSong.mp3");
+        assert(NyanTheSong != NULL);
 
 	//Initialize SDL
 	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
@@ -274,6 +308,8 @@ void Controller::processInput(SDL_Event& e)
             paddleOpp = !paddleOpp;
             setPaddles(paddleOpp); ///Change this to true for an AI paddle
             break;
+        case SDLK_q:
+            quit = true;
         }
     }
 }

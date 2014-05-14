@@ -14,14 +14,8 @@ class Object
 		Object();
 		~Object();
 
-		//Maximum axis velocity of the dot
-		int maxVelocity;
-
-		//Postion of the object
-		int posX, posY;
-
 		//Velocity for each direction
-		int velocityX, velocityY;
+		int vX, vY;
 
 		//Object's collision box
 		SDL_Rect hitBox;
