@@ -86,7 +86,6 @@ void Controller::runGame()
         //While game is still going
         while( !quit )
         {
-
             //Handle events on queue
             while(SDL_PollEvent(&NyanBGM) != 0)
             {

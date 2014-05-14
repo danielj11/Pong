@@ -8,60 +8,41 @@ Score::Score()
 
 void Score::setImage(int score, SDL_Renderer* renderer)
 {
-    if(score == 0)
-    {
-        scoreSurface = SDL_LoadBMP("images/score0.bmp");
-    }
-    if(score == 1)
-    {
-        scoreSurface = SDL_LoadBMP("images/score1.bmp");
-    }
-    if(score == 2)
-    {
-        scoreSurface = SDL_LoadBMP("images/score2.bmp");
-    }
-    if(score == 3)
-    {
-        scoreSurface = SDL_LoadBMP("images/score3.bmp");
-    }
-    if(score == 4)
-    {
-        scoreSurface = SDL_LoadBMP("images/score4.bmp");
-    }
-    if(score == 5)
-    {
-        scoreSurface = SDL_LoadBMP("images/score5.bmp");
-    }
-    /*switch (score)
+    switch (score)
     {
     case 0:
         {
             scoreSurface = SDL_LoadBMP("images/score0.bmp");
         }
+        break;
     case 1:
         {
             scoreSurface = SDL_LoadBMP("images/score1.bmp");
         }
+        break;
     case 2:
         {
             scoreSurface = SDL_LoadBMP("images/score2.bmp");
         }
+        break;
     case 3:
         {
             scoreSurface = SDL_LoadBMP("images/score3.bmp");
         }
+        break;
     case 4:
         {
             scoreSurface = SDL_LoadBMP("images/score4.bmp");
         }
+        break;
     case 5:
         {
             scoreSurface = SDL_LoadBMP("images/score5.bmp");
-            std::cout << score << std::endl;
         }
+        break;
     default:
         break;
-    }*/
+    }
 
     scoreTexture = SDL_CreateTextureFromSurface(renderer, scoreSurface);
 }
