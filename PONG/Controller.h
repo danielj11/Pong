@@ -7,6 +7,7 @@
 #include <cassert>
 #include "Paddle.h"
 #include "SDL_ttf.h"
+#include "Score.h"
 
 using std::cout;
 using std::endl;
@@ -27,11 +28,18 @@ public:
     void colorChange(int& change, int& choice);
 private:
     bool paddleOpp;
+    int scoreP1, scoreP2;
     Paddle playerOne;
     Paddle playerTwo;
+    Score scoreDisplayP1;
+    Score scoreDisplayP2;
     Mix_Music* NyanTheSong; //Song loader
     SDL_Window* gWindow; //Window that will show game
     SDL_Renderer* renderer; //Renderer for the game
+
+    SDL_Surface* dash;
+    SDL_Texture* dashTex;
+    SDL_Rect dashRect;
 };
 
 #endif // CONTROLLER_H

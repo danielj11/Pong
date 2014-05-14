@@ -9,6 +9,12 @@ Controller::Controller()
     renderer = SDL_CreateRenderer(gWindow, -1, 0);
     NyanTheSong = NULL;
     paddleOpp = true;
+    scoreP1 = 0;
+    scoreP2 = 0;
+    scoreDisplayP1.setRect(1);
+    scoreDisplayP2.setRect(2);
+    dash = NULL;
+    dashTex = NULL;
 }
 
 Controller::~Controller()
@@ -55,8 +61,6 @@ void Controller::runGame()
         SDL_Event NyanBGM;
 
         //Testing score display
-        SDL_Surface* dash = NULL;
-        SDL_Texture* dashTex = NULL;
         dash = SDL_LoadBMP("images/dash.bmp");
         SDL_Rect dashRect;
         dashRect.y = 0;
@@ -64,27 +68,6 @@ void Controller::runGame()
         dashRect.h = 52;
         dashRect.w = 43;
         dashTex = SDL_CreateTextureFromSurface(renderer,dash);
-
-        SDL_Surface* scoreP1 = NULL;
-        SDL_Texture* scoreP1Tex = NULL;
-        scoreP1 = SDL_LoadBMP("images/score0.bmp");
-        SDL_Rect P1ScoreRect;
-        P1ScoreRect.y = 0;
-        P1ScoreRect.x = 328;
-        scoreP1Tex = SDL_CreateTextureFromSurface(renderer,scoreP1);
-        P1ScoreRect.h = 52;
-        P1ScoreRect.w = 43;
-
-        SDL_Surface* scoreP2 = NULL;
-        SDL_Texture* scoreP2Tex = NULL;
-        scoreP2 = SDL_LoadBMP("images/score0.bmp");
-        SDL_Rect P2ScoreRect;
-        P2ScoreRect.y = 0;
-        P2ScoreRect.x = 418;
-        scoreP2Tex = SDL_CreateTextureFromSurface(renderer,scoreP2);
-        P2ScoreRect.h = 52;
-        P2ScoreRect.w = 43;
-        //End of score display test
 
         //Set player one variables
         playerOne.setWidth(PADDLE_WIDTH);
@@ -103,6 +86,7 @@ void Controller::runGame()
         //While game is still going
         while( !quit )
         {
+
             //Handle events on queue
             while(SDL_PollEvent(&NyanBGM) != 0)
             {
@@ -131,8 +115,12 @@ void Controller::runGame()
             //Clear screen
             SDL_RenderCopy(renderer, Bg, NULL, NULL);
             SDL_RenderCopy(renderer,dashTex, NULL, &dashRect);
-            SDL_RenderCopy(renderer,scoreP1Tex, NULL, &P1ScoreRect);
-            SDL_RenderCopy(renderer,scoreP2Tex, NULL, &P2ScoreRect);
+
+            //Set scores
+            scoreDisplayP1.setImage(scoreP1, renderer);
+            scoreDisplayP2.setImage(scoreP2, renderer);
+            scoreDisplayP1.displayScore(renderer);
+            scoreDisplayP2.displayScore(renderer);
 
             colorChange(colorChangeP1, colorChoiceP1);
 
