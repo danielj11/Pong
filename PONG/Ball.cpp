@@ -143,7 +143,7 @@ void Ball::bounce(Paddle P, char UD)
 
     if (UD == 'u') //upper part of the paddle
     {
-        vY -= adjust;
+        vY = adjust;
 
         if (vY < negVelCap)
         {
@@ -152,7 +152,7 @@ void Ball::bounce(Paddle P, char UD)
     }
     else //lower part of the paddle
     {
-        vY += adjust;
+        vY = adjust;
 
         if (vY > velCap)
         {
