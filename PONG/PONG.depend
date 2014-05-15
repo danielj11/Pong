@@ -102,10 +102,10 @@
 1399515622 source:c:\users\jacob\documents\github\pong\pong\texture.cpp
 	"Texture.h"
 
-1400052452 source:c:\users\michael\documents\github\pong\pong\controller.cpp
+1400115214 source:c:\users\michael\documents\github\pong\pong\controller.cpp
 	"Controller.h"
 
-1400048848 c:\users\michael\documents\github\pong\pong\controller.h
+1400115214 c:\users\michael\documents\github\pong\pong\controller.h
 	"SDL.h"
 	"SDL_mixer.h"
 	<iostream>
@@ -113,8 +113,9 @@
 	"Paddle.h"
 	"Ball.h"
 	"SDL_ttf.h"
+	"Score.h"
 
-1399946646 c:\users\michael\documents\github\pong\pong\paddle.h
+1400115214 c:\users\michael\documents\github\pong\pong\paddle.h
 	<SDL.h>
 	<SDL_image.h>
 	<stdio.h>
@@ -122,14 +123,14 @@
 	<iostream>
 	"Object.h"
 
-1400036710 c:\users\michael\documents\github\pong\pong\object.h
+1400115214 c:\users\michael\documents\github\pong\pong\object.h
 	<SDL.h>
 	<SDL_image.h>
 	<stdio.h>
 	<string>
 	<iostream>
 
-1400047875 source:c:\users\michael\documents\github\pong\pong\main.cpp
+1400115214 source:c:\users\michael\documents\github\pong\pong\main.cpp
 	<SDL.h>
 	<SDL_image.h>
 	<stdio.h>
@@ -139,16 +140,16 @@
 	<time.h>
 	"Controller.h"
 
-1400036447 source:c:\users\michael\documents\github\pong\pong\object.cpp
+1400115214 source:c:\users\michael\documents\github\pong\pong\object.cpp
 	"Object.h"
 
-1400049052 source:c:\users\michael\documents\github\pong\pong\paddle.cpp
+1400115214 source:c:\users\michael\documents\github\pong\pong\paddle.cpp
 	"Paddle.h"
 
-1400054688 source:c:\users\michael\documents\github\pong\pong\ball.cpp
+1400161349 source:c:\users\michael\documents\github\pong\pong\ball.cpp
 	"Ball.h"
 
-1400052791 c:\users\michael\documents\github\pong\pong\ball.h
+1400155166 c:\users\michael\documents\github\pong\pong\ball.h
 	<SDL.h>
 	<SDL_image.h>
 	<stdio.h>
@@ -253,5 +254,17 @@
 	"Paddle.h"
 
 1400115214 source:c:\users\michael\downloads\pong-partnerpong (1)\pong-partnerpong\pong\score.cpp
+	"Score.h"
+
+1400115214 c:\users\michael\documents\github\pong\pong\score.h
+	<SDL.h>
+	<SDL_image.h>
+	<stdio.h>
+	<string>
+	<iostream>
+	<string>
+	<stdlib.h>
+
+1400115214 source:c:\users\michael\documents\github\pong\pong\score.cpp
 	"Score.h"
 

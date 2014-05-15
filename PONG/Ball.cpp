@@ -109,7 +109,7 @@ int Ball::move(int screenH, int screenW, Paddle P1, Paddle P2)
 void Ball::bounce(Paddle P, char UD)
 {
     int adjust = P.hitBox.y + P.hitBox.h / 2;
-    int adjustMod = velCap + 10;
+    int adjustMod = 2*velCap;
 
     //if it hits the center
     if (hitBox.y == (P.hitBox.y + P.hitBox.h / 2))
@@ -128,7 +128,7 @@ void Ball::bounce(Paddle P, char UD)
     }
     else
     {
-        while (adjust > hitBox.y)
+        while (adjust < hitBox.y)
         {
             adjust++;
         }
@@ -143,28 +143,20 @@ void Ball::bounce(Paddle P, char UD)
 
     if (UD == 'u') //upper part of the paddle
     {
-        vY += adjust/7;
+        vY -= adjust;
 
         if (vY < negVelCap)
         {
             vY = negVelCap;
         }
-        else if (vY >= 0)
-        {
-            vY = -1;
-        }
     }
     else //lower part of the paddle
     {
-        vY += adjust/7;
+        vY += adjust;
 
-        if (vY < velCap)
+        if (vY > velCap)
         {
             vY = velCap;
-        }
-        else if (vY <= 0)
-        {
-            vY = 1;
         }
     }
 }
