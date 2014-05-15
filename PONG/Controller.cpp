@@ -9,6 +9,12 @@ Controller::Controller()
     renderer = SDL_CreateRenderer(gWindow, -1, 0);
     NyanTheSong = NULL;
     paddleOpp = true;
+    scoreP1 = 0;
+    scoreP2 = 0;
+    scoreDisplayP1.setRect(1);
+    scoreDisplayP2.setRect(2);
+    dash = NULL;
+    dashTex = NULL;
 }
 
 Controller::~Controller()
@@ -47,6 +53,11 @@ void Controller::runGame()
         Bg = SDL_CreateTextureFromSurface(renderer, BgSurface);
         assert(Bg != NULL);
 
+        //Music (NYAN!)
+        NyanTheSong = NULL;
+        NyanTheSong = Mix_LoadMUS("sounds/NyanTheSong.mp3");
+        assert(NyanTheSong != NULL);
+
         //Main loop flag
         quit = false;
 
@@ -55,8 +66,6 @@ void Controller::runGame()
         SDL_Event NyanBGM;
 
         //Testing score display
-        SDL_Surface* dash = NULL;
-        SDL_Texture* dashTex = NULL;
         dash = SDL_LoadBMP("images/dash.bmp");
         SDL_Rect dashRect;
         dashRect.y = 0;
@@ -65,26 +74,7 @@ void Controller::runGame()
         dashRect.w = 43;
         dashTex = SDL_CreateTextureFromSurface(renderer,dash);
 
-        SDL_Surface* scoreP1 = NULL;
-        SDL_Texture* scoreP1Tex = NULL;
-        scoreP1 = SDL_LoadBMP("images/score0.bmp");
-        SDL_Rect P1ScoreRect;
-        P1ScoreRect.y = 0;
-        P1ScoreRect.x = 328;
-        scoreP1Tex = SDL_CreateTextureFromSurface(renderer,scoreP1);
-        P1ScoreRect.h = 52;
-        P1ScoreRect.w = 43;
 
-        SDL_Surface* scoreP2 = NULL;
-        SDL_Texture* scoreP2Tex = NULL;
-        scoreP2 = SDL_LoadBMP("images/score0.bmp");
-        SDL_Rect P2ScoreRect;
-        P2ScoreRect.y = 0;
-        P2ScoreRect.x = 418;
-        scoreP2Tex = SDL_CreateTextureFromSurface(renderer,scoreP2);
-        P2ScoreRect.h = 52;
-        P2ScoreRect.w = 43;
-        //End of score display test
 
         //Set player one variables
         playerOne.setWidth(PADDLE_WIDTH);
@@ -137,8 +127,11 @@ void Controller::runGame()
             //Clear screen
             SDL_RenderCopy(renderer, Bg, NULL, NULL);
             SDL_RenderCopy(renderer,dashTex, NULL, &dashRect);
-            SDL_RenderCopy(renderer,scoreP1Tex, NULL, &P1ScoreRect);
-            SDL_RenderCopy(renderer,scoreP2Tex, NULL, &P2ScoreRect);
+
+            scoreDisplayP1.setImage(scoreP1, renderer);
+            scoreDisplayP2.setImage(scoreP2, renderer);
+            scoreDisplayP1.displayScore(renderer);
+            scoreDisplayP2.displayScore(renderer);
 
             colorChange(colorChangeP1, colorChoiceP1);
 
@@ -165,17 +158,45 @@ void Controller::runGame()
             if(ballMove == 1)
             {
                 //P1 gets point
+                scoreP1++;
                 timerSet = true;
             }
             if(ballMove == 2)
             {
                 //P2 gets point
+                scoreP2++;
                 timerSet = true;
+            }
+
+            if(scoreP1 == 9 || scoreP2 == 9)
+            {
+                quit = true;
+                SDL_Surface* winSurface = NULL; //background surface
+                SDL_Texture* winTexture = NULL; //background
+
+                if (scoreP1 == 9)
+                {
+                    winSurface = SDL_LoadBMP("images/p1win.bmp");
+                    assert(winSurface != NULL);
+                    winTexture = SDL_CreateTextureFromSurface(renderer, winSurface);
+                    assert(winTexture != NULL);
+                    SDL_RenderCopy(renderer, winTexture, NULL, NULL);
+                }
+                else
+                {
+                    winSurface = SDL_LoadBMP("images/p2win.bmp");
+                    assert(winSurface != NULL);
+                    winTexture = SDL_CreateTextureFromSurface(renderer, winSurface);
+                    assert(winTexture != NULL);
+                    SDL_RenderCopy(renderer, winTexture, NULL, NULL);
+                }
+
             }
 
             //Update screen
             SDL_RenderPresent(renderer);
 		}
+		SDL_Delay(1500);
 	}
 
 	//Close SDL
@@ -186,11 +207,6 @@ bool Controller::initialize()
 {
 	//Initialization flag
 	bool success = true;
-
-	        //Music (NYAN!)
-        NyanTheSong = NULL;
-        NyanTheSong = Mix_LoadMUS("sounds/NyanTheSong.mp3");
-        assert(NyanTheSong != NULL);
 
 	//Initialize SDL
 	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
@@ -320,7 +336,7 @@ void Controller::setPaddles(bool isAI)
     if (isAI)
     {
         playerTwo.AIControlled = true;
-        playerTwo.speed = 5;
+        playerTwo.speed = 6;
     }
     else
     {

@@ -48,18 +48,20 @@
 	<string>
 	<iostream>
 
-1399871304 source:c:\users\jacob\documents\github\pong\pong\controller.cpp
+1400118971 source:c:\users\jacob\documents\github\pong\pong\controller.cpp
 	"Controller.h"
 
-1399870755 c:\users\jacob\documents\github\pong\pong\controller.h
+1400116233 c:\users\jacob\documents\github\pong\pong\controller.h
 	"SDL.h"
 	"SDL_mixer.h"
 	<iostream>
 	<cassert>
 	"Paddle.h"
+	"Ball.h"
 	"SDL_ttf.h"
+	"Score.h"
 
-1399696362 c:\users\jacob\documents\github\pong\pong\paddle.h
+1400013324 c:\users\jacob\documents\github\pong\pong\paddle.h
 	<SDL.h>
 	<SDL_image.h>
 	<stdio.h>
@@ -67,7 +69,7 @@
 	<iostream>
 	"Object.h"
 
-1399696362 c:\users\jacob\documents\github\pong\pong\object.h
+1400115555 c:\users\jacob\documents\github\pong\pong\object.h
 	<SDL.h>
 	<SDL_image.h>
 	<stdio.h>
@@ -81,18 +83,20 @@
 	<string>
 	<iostream>
 
-1399600581 source:c:\users\jacob\documents\github\pong\pong\main.cpp
+1400115555 source:c:\users\jacob\documents\github\pong\pong\main.cpp
 	<SDL.h>
 	<SDL_image.h>
 	<stdio.h>
 	<string>
 	<iostream>
+	<stdlib.h>
+	<time.h>
 	"Controller.h"
 
-1399696362 source:c:\users\jacob\documents\github\pong\pong\object.cpp
+1400115555 source:c:\users\jacob\documents\github\pong\pong\object.cpp
 	"Object.h"
 
-1399869997 source:c:\users\jacob\documents\github\pong\pong\paddle.cpp
+1400115555 source:c:\users\jacob\documents\github\pong\pong\paddle.cpp
 	"Paddle.h"
 
 1399515622 source:c:\users\jacob\documents\github\pong\pong\texture.cpp
@@ -155,4 +159,31 @@
 	<cmath>
 	"Object.h"
 	"Paddle.h"
+
+1400115555 c:\users\jacob\documents\github\pong\pong\ball.h
+	<SDL.h>
+	<SDL_image.h>
+	<stdio.h>
+	<string>
+	<iostream>
+	<string>
+	<stdlib.h>
+	<cmath>
+	"Object.h"
+	"Paddle.h"
+
+1400118203 source:c:\users\jacob\documents\github\pong\pong\ball.cpp
+	"Ball.h"
+
+1400115534 source:c:\users\jacob\documents\github\pong\pong\score.cpp
+	"Score.h"
+
+1400115534 c:\users\jacob\documents\github\pong\pong\score.h
+	<SDL.h>
+	<SDL_image.h>
+	<stdio.h>
+	<string>
+	<iostream>
+	<string>
+	<stdlib.h>
 

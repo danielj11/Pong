@@ -87,7 +87,6 @@ int Ball::move(int screenH, int screenW, Paddle P1, Paddle P2)
                 {
                     vY = -1;
                 }
-                std::cout << vY << std::endl;
             }
             else //it is below, so subtract some velocity
             {
@@ -112,8 +111,6 @@ int Ball::move(int screenH, int screenW, Paddle P1, Paddle P2)
                 {
                     vY = velCap;
                 }
-
-                std::cout << vY << std::endl;
             }
         }
     }
@@ -204,11 +201,5 @@ int Ball::move(int screenH, int screenW, Paddle P1, Paddle P2)
 
 void Ball::timer()
 {
-    //now put the tex for number 3
-    //SDL_Delay(1000); //wait 1 second
-    //now put the tex for number 2
-    //SDL_Delay(1000); //wait 1 second
-    //now put the tex for number 1
-    //SDL_Delay(1000); //wait 1 second
-    //reapply ball texture
+    SDL_Delay(1000); //wait 1 second
 }
