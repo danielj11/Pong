@@ -7,8 +7,8 @@ Ball::Ball(int x = 0, int y = 0, int vx = 0, int vy = 0)
     originX = x;
     originY = y;
 
-    hitBox.h = 40;
-    hitBox.w = 50;
+    hitBox.h = 30;
+    hitBox.w = 45;
 
     vX = vx;
     vY = vy;
@@ -28,9 +28,6 @@ int Ball::move(int screenH, int screenW, Paddle P1, Paddle P2)
     //Who has hit the other player's "DeadZone"?
     //1 = playerOne gets a point, 2 = playerTwo gets a point
     int PlayerPlus = 0;
-    int adjust = 0;
-    int addToVel = 0;
-    int adjustMod = 5;
 
     /*************
     *  Movement  *
@@ -59,58 +56,13 @@ int Ball::move(int screenH, int screenW, Paddle P1, Paddle P2)
         {
             vX = -vX;
 
-            //if center vX = 0
-            if (hitBox.y == (P1.hitBox.y + P1.hitBox.h / 2))
+            if (hitBox.y < (P1.hitBox.y + P1.hitBox.h / 2)) //it is above, so add some velocity
             {
-                vY = 0;
-            }
-            else if (hitBox.y < (P1.hitBox.y + P1.hitBox.h / 2)) //it is above, so add some velocity
-            {
-                adjust = P1.hitBox.y + P1.hitBox.h / 2; //adjust = center of paddle
-
-                while (adjust < hitBox.y)
-                {
-                    adjust++;
-                }
-
-                adjust = -adjust;
-                adjust = adjust / (velCap + adjustMod);
-
-                vY += adjust;
-
-                if (vY < negVelCap)
-                {
-                    vY = negVelCap;
-                }
-
-                if (vY > 0)
-                {
-                    vY = -1;
-                }
+                bounce(P1, 'u');
             }
             else //it is below, so subtract some velocity
             {
-                adjust = P1.hitBox.y + P1.hitBox.h / 2;
-
-                //hile it is not at center, adjust to fit
-                while (adjust > hitBox.y)
-                {
-                    adjust++;
-                }
-
-                adjust = adjust / (velCap + adjustMod); //adjust this to something more reasonable
-
-                if (addToVel < 0)
-                {
-                    adjust = 1;
-                }
-
-                vY += adjust;
-
-                if (vY > velCap)
-                {
-                    vY = velCap;
-                }
+                bounce(P1, 'd');
             }
         }
     }
@@ -130,58 +82,13 @@ int Ball::move(int screenH, int screenW, Paddle P1, Paddle P2)
         {
             vX = -vX;
 
-            //if center vX = 0
-            if (hitBox.y == (P2.hitBox.y + P2.hitBox.h / 2))
+            if (hitBox.y < (P2.hitBox.y + P2.hitBox.h / 2)) //it is above, so add some velocity
             {
-                vY = 0;
-            }
-            else if (hitBox.y < (P2.hitBox.y + P2.hitBox.h / 2)) //it is above, so add some velocity
-            {
-                adjust = P2.hitBox.y + P2.hitBox.h / 2; //adjust = center of paddle
-
-                while (adjust < hitBox.y)
-                {
-                    adjust++;
-                }
-
-                adjust = -adjust;
-                adjust = adjust / (velCap + adjustMod);
-
-                vY += adjust;
-
-                if (vY < negVelCap)
-                {
-                    vY = negVelCap;
-                }
-
-                if (vY > 0)
-                {
-                    vY = -1;
-                }
+                bounce(P2, 'u');
             }
             else //it is below, so subtract some velocity
             {
-                adjust = P2.hitBox.y + P2.hitBox.h / 2;
-
-                //hile it is not at center, adjust to fit
-                while (adjust > hitBox.y)
-                {
-                    adjust++;
-                }
-
-                adjust = adjust / (velCap + adjustMod); //adjust this to something more reasonable
-
-                if (addToVel < 0)
-                {
-                    adjust = 1;
-                }
-
-                vY += adjust;
-
-                if (vY > velCap)
-                {
-                    vY = velCap;
-                }
+                bounce(P2, 'd');
             }
         }
     }
@@ -197,6 +104,69 @@ int Ball::move(int screenH, int screenW, Paddle P1, Paddle P2)
     }
 
     return PlayerPlus;
+}
+
+void Ball::bounce(Paddle P, char UD)
+{
+    int adjust = P.hitBox.y + P.hitBox.h / 2;
+    int adjustMod = velCap + 10;
+
+    //if it hits the center
+    if (hitBox.y == (P.hitBox.y + P.hitBox.h / 2))
+    {
+        vY = 0;
+        return;
+    }
+
+    //while it is not at center, adjust to fit
+    if (UD == 'u')
+    {
+        while (adjust > hitBox.y)
+        {
+            adjust--;
+        }
+    }
+    else
+    {
+        while (adjust > hitBox.y)
+        {
+            adjust++;
+        }
+    }
+
+    adjust = adjust / (velCap + adjustMod); //adjust this to something more reasonable
+
+    if (adjust < 0)
+    {
+        adjust = 1;
+    }
+
+    if (UD == 'u') //upper part of the paddle
+    {
+        vY += adjust/7;
+
+        if (vY < negVelCap)
+        {
+            vY = negVelCap;
+        }
+        else if (vY >= 0)
+        {
+            vY = -1;
+        }
+    }
+    else //lower part of the paddle
+    {
+        vY += adjust/7;
+
+        if (vY < velCap)
+        {
+            vY = velCap;
+        }
+        else if (vY <= 0)
+        {
+            vY = 1;
+        }
+    }
 }
 
 void Ball::timer()

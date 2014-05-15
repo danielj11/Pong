@@ -26,6 +26,7 @@ public:
                                                                 //and collision check
     void setBallTex(string texName);
     void timer();
+    void bounce(Paddle P, char UD);
     SDL_Surface* ballSurf;
     SDL_Texture* ballTex;
 

@@ -31,12 +31,16 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="Ball.cpp" />
+		<Unit filename="Ball.h" />
 		<Unit filename="Controller.cpp" />
 		<Unit filename="Controller.h" />
 		<Unit filename="Object.cpp" />
 		<Unit filename="Object.h" />
 		<Unit filename="Paddle.cpp" />
 		<Unit filename="Paddle.h" />
+		<Unit filename="Score.cpp" />
+		<Unit filename="Score.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />
