@@ -48,10 +48,10 @@
 	<string>
 	<iostream>
 
-1400121581 source:c:\users\jacob\documents\github\pong\pong\controller.cpp
+1400122231 source:c:\users\jacob\documents\github\pong\pong\controller.cpp
 	"Controller.h"
 
-1400120722 c:\users\jacob\documents\github\pong\pong\controller.h
+1400122231 c:\users\jacob\documents\github\pong\pong\controller.h
 	"SDL.h"
 	"SDL_mixer.h"
 	<iostream>
@@ -61,7 +61,7 @@
 	"SDL_ttf.h"
 	"Score.h"
 
-1400013324 c:\users\jacob\documents\github\pong\pong\paddle.h
+1400122224 c:\users\jacob\documents\github\pong\pong\paddle.h
 	<SDL.h>
 	<SDL_image.h>
 	<stdio.h>
@@ -69,7 +69,7 @@
 	<iostream>
 	"Object.h"
 
-1400115555 c:\users\jacob\documents\github\pong\pong\object.h
+1400122231 c:\users\jacob\documents\github\pong\pong\object.h
 	<SDL.h>
 	<SDL_image.h>
 	<stdio.h>
@@ -83,7 +83,7 @@
 	<string>
 	<iostream>
 
-1400115555 source:c:\users\jacob\documents\github\pong\pong\main.cpp
+1400122231 source:c:\users\jacob\documents\github\pong\pong\main.cpp
 	<SDL.h>
 	<SDL_image.h>
 	<stdio.h>
@@ -93,10 +93,10 @@
 	<time.h>
 	"Controller.h"
 
-1400115555 source:c:\users\jacob\documents\github\pong\pong\object.cpp
+1400122231 source:c:\users\jacob\documents\github\pong\pong\object.cpp
 	"Object.h"
 
-1400115555 source:c:\users\jacob\documents\github\pong\pong\paddle.cpp
+1400122231 source:c:\users\jacob\documents\github\pong\pong\paddle.cpp
 	"Paddle.h"
 
 1399515622 source:c:\users\jacob\documents\github\pong\pong\texture.cpp
@@ -160,7 +160,7 @@
 	"Object.h"
 	"Paddle.h"
 
-1400119580 c:\users\jacob\documents\github\pong\pong\ball.h
+1400122223 c:\users\jacob\documents\github\pong\pong\ball.h
 	<SDL.h>
 	<SDL_image.h>
 	<stdio.h>
@@ -178,7 +178,7 @@
 1400120566 source:c:\users\jacob\documents\github\pong\pong\score.cpp
 	"Score.h"
 
-1400120566 c:\users\jacob\documents\github\pong\pong\score.h
+1400122231 c:\users\jacob\documents\github\pong\pong\score.h
 	<SDL.h>
 	<SDL_image.h>
 	<stdio.h>
