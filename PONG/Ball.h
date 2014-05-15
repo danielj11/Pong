@@ -26,11 +26,12 @@ public:
                                                                 //and collision check
     void setBallTex(string texName);
     void timer();
+    SDL_Surface* ballSurf;
+    SDL_Texture* ballTex;
 
 private:
     int originX, originY, velCap, negVelCap;
     string texName;
-    SDL_Surface* ballTex;
 };
 
 #endif // PADDLE_H

@@ -6,6 +6,10 @@
 Controller::Controller()
 {
     gWindow = NULL;
+    winSurface = NULL;
+    winTexture = NULL;
+    dash = NULL;
+    dashTex = NULL;
     renderer = SDL_CreateRenderer(gWindow, -1, 0);
     NyanTheSong = NULL;
     paddleOpp = true;
@@ -13,12 +17,13 @@ Controller::Controller()
     scoreP2 = 0;
     scoreDisplayP1.setRect(1);
     scoreDisplayP2.setRect(2);
-    dash = NULL;
-    dashTex = NULL;
+
 }
 
 Controller::~Controller()
 {
+    SDL_FreeSurface(winSurface);
+    SDL_FreeSurface(dash);
 }
 
 //Function that runs the game
@@ -31,6 +36,10 @@ void Controller::runGame()
 	}
 	else
 	{
+	    //Sets window Icon
+	    SDL_Surface* icon = SDL_LoadBMP("images/nyanIcon.bmp");
+	    SDL_SetWindowIcon(gWindow, icon);
+
 	    //Player 1 paddle colors
         int colorChangeP1 = 0; //how long till color change (don't seizure it)
         int colorChoiceP1 = 0; //switch for colors
@@ -94,6 +103,9 @@ void Controller::runGame()
 
         Ball Nyan(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 8, -4);
 
+        Nyan.ballSurf = SDL_LoadBMP("images/nyanBall.bmp");
+        Nyan.ballTex = SDL_CreateTextureFromSurface(renderer, Nyan.ballSurf);
+
         setPaddles(paddleOpp);//initial opponent paddle set
 
         //While game is still going
@@ -145,8 +157,7 @@ void Controller::runGame()
 
             int ballMove = Nyan.move(SCREEN_HEIGHT, SCREEN_WIDTH, playerOne, playerTwo);
 
-            SDL_RenderFillRect(renderer, &Nyan.hitBox);
-            SDL_RenderDrawRect(renderer, &Nyan.hitBox);
+            SDL_RenderCopy(renderer, Nyan.ballTex, NULL, &Nyan.hitBox);
 
             if (timerSet)
             {
@@ -171,8 +182,6 @@ void Controller::runGame()
             if(scoreP1 == 9 || scoreP2 == 9)
             {
                 quit = true;
-                SDL_Surface* winSurface = NULL; //background surface
-                SDL_Texture* winTexture = NULL; //background
 
                 if (scoreP1 == 9)
                 {
@@ -196,9 +205,13 @@ void Controller::runGame()
             //Update screen
             SDL_RenderPresent(renderer);
 		}
+		//Delay end of game to show who won
 		SDL_Delay(1500);
-	}
 
+		//Free surfaces
+		SDL_FreeSurface(BgSurface);
+		SDL_FreeSurface(icon);
+	}
 	//Close SDL
 	closeGame();
 }

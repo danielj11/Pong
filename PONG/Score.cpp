@@ -6,6 +6,13 @@ Score::Score()
     scoreTexture = NULL;
 }
 
+Score::~Score()
+{
+    SDL_FreeSurface(scoreSurface);
+    scoreTexture = NULL;
+}
+
+//Sets surface image for score
 void Score::setImage(int score, SDL_Renderer* renderer)
 {
     switch (score)
@@ -70,6 +77,7 @@ void Score::setImage(int score, SDL_Renderer* renderer)
     scoreTexture = SDL_CreateTextureFromSurface(renderer, scoreSurface);
 }
 
+//Sets dimensions of rect depending on input
 void Score::setRect(int playerNum)
 {
     if (playerNum == 1)
@@ -88,6 +96,7 @@ void Score::setRect(int playerNum)
     }
 }
 
+//Renders score to screen
 void Score::displayScore(SDL_Renderer* renderer)
 {
     SDL_RenderCopy(renderer, scoreTexture, NULL, &displayArea);

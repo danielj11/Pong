@@ -37,7 +37,8 @@ private:
     Mix_Music* NyanTheSong; //Song loader
     SDL_Window* gWindow; //Window that will show game
     SDL_Renderer* renderer; //Renderer for the game
-
+    SDL_Surface* winSurface;
+    SDL_Texture* winTexture;
     SDL_Surface* dash;
     SDL_Texture* dashTex;
     SDL_Rect dashRect;

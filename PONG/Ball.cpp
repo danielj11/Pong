@@ -7,8 +7,8 @@ Ball::Ball(int x = 0, int y = 0, int vx = 0, int vy = 0)
     originX = x;
     originY = y;
 
-    hitBox.h = 20;
-    hitBox.w = 30;
+    hitBox.h = 40;
+    hitBox.w = 50;
 
     vX = vx;
     vY = vy;
@@ -20,7 +20,7 @@ Ball::Ball(int x = 0, int y = 0, int vx = 0, int vy = 0)
 
 Ball::~Ball()
 {
-    SDL_FreeSurface(ballTex);
+    SDL_FreeSurface(ballSurf);
 }
 
 int Ball::move(int screenH, int screenW, Paddle P1, Paddle P2)
@@ -117,7 +117,7 @@ int Ball::move(int screenH, int screenW, Paddle P1, Paddle P2)
 
     //check for the P2 paddles pos
     //is it at or past the P2 paddle?
-    else if(hitBox.x >= (P2.hitBox.x - P2.hitBox.w) + 5)
+    else if(hitBox.x >= (P2.hitBox.x - P2.hitBox.w) - 20)
     {
         //is it above or below the paddle
         if (hitBox.y <= P2.hitBox.y - hitBox.h || hitBox.y >= (P2.hitBox.y + P2.hitBox.h))
@@ -187,7 +187,7 @@ int Ball::move(int screenH, int screenW, Paddle P1, Paddle P2)
     }
 
     /****************************************
-    *  Check ball hitting cieling or floor  *
+    *  Check ball hitting ceiling or floor  *
     ****************************************/
 
     //has it hit the floor or cieling? if so bounce it

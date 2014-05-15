@@ -15,6 +15,7 @@ class Score
 {
 public:
     Score();
+    ~Score();
     SDL_Rect displayArea;
     void setImage(int score, SDL_Renderer* renderer);
     void displayScore(SDL_Renderer* renderer);
